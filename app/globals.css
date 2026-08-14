@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+:root {
+  /* Ink & paper */
+  --ink: #18101f;
+  --paper: #faf6ee;
+  --panel: #fffdf8;
+  --panel-alt: #f0e7d6;
+
+  /* Dye colors — the three threads used across every accent moment */
+  --saffron: #d69a3c;
+  --teal: #1e5b53;
+  --berry: #a23350;
+
+  --muted: #6c6155;
+  --line: rgba(24, 16, 31, 0.14);
+  --line-soft: rgba(24, 16, 31, 0.08);
+  --shadow: rgba(24, 16, 31, 0.14);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+main {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--saffron);
+  color: var(--ink);
+}
+
+/* ---------- Type ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 420;
+  letter-spacing: -0.01em;
+}
+
+.display-upright {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.container-pd {
+  width: min(1280px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+/* ---------- Thread rule: the signature divider ---------- */
+/* A gradient the width of the three dye colors, standing in for the
+   three dyed threads that run through the studio's palette. */
+
+.thread-rule {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--saffron) 0%, var(--saffron) 32%, var(--teal) 32%, var(--teal) 66%, var(--berry) 66%, var(--berry) 100%);
+}
+
+.thread-rule-thin {
+  height: 2px;
+  width: 56px;
+  background: linear-gradient(90deg, var(--saffron), var(--teal), var(--berry));
+}
+
+/* ---------- Fringe: a repeating tick pattern standing in for the
+   fringed edge of a woven scarf. Used to close out sections. ---------- */
+
+.fringe {
+  height: 20px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0,
+    var(--ink) 1.5px,
+    transparent 1.5px,
+    transparent 11px
+  );
+  opacity: 0.16;
+}
+
+.fringe-light {
+  opacity: 0.28;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-dark {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.btn-dark:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.btn-light {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.btn-light:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---------- Form fields ---------- */
+
+.input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 13px 14px;
+  outline: none;
+  border-radius: 2px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(30, 91, 83, 0.15);
+}
+
+/* ---------- Surfaces ---------- */
+
+.card-image {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  object-fit: cover;
+  background: var(--panel-alt);
+}
+
+.site-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.panel-dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---------- Scarf card: a folded dye-swatch corner, standing in for
+   how a folded scarf shows a triangle of its underside color. ---------- */
+
+.scarf-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.scarf-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  background: linear-gradient(135deg, var(--saffron), var(--berry));
+  transition: width 0.25s ease, height 0.25s ease;
+}
+
+.scarf-card:hover::after {
+  width: 42px;
+  height: 42px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--saffron);
+}
+
+@media (max-width: 640px) {
+  .container-pd {
+    width: min(100%, calc(100% - 22px));
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
