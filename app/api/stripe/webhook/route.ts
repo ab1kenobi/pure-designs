@@ -22,6 +22,7 @@ export async function POST(request: Request) {
   if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
     const session = event.data.object as Stripe.Checkout.Session & {
       shipping_details?: {
+        name?: string | null;
         address?: Stripe.Address | null;
       } | null;
     };
@@ -39,9 +40,12 @@ export async function POST(request: Request) {
       const { data: order, error } = await supabase.from("orders").insert({
         stripe_session_id: session.id,
         customer_email: session.customer_details?.email || null,
+        customer_phone: session.customer_details?.phone || null,
         total: (session.amount_total || 0) / 100,
         status: "paid",
-        shipping_address: session.shipping_details?.address || null
+        shipping_address: session.shipping_details?.address
+          ? { name: session.shipping_details.name || null, ...session.shipping_details.address }
+          : null
       }).select("id").single();
 
       if (error || !order) {

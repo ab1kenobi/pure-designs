@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -15,7 +14,7 @@ export function LoginForm() {
     setError("");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) setError(error.message);
-    else window.location.href = "/account";
+    else window.location.href = "/admin";
   }
 
   return (
@@ -24,7 +23,6 @@ export function LoginForm() {
       <input required type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="input" />
       <button className="btn btn-dark w-full">Sign in</button>
       {error && <p className="text-sm text-[var(--berry)]">{error}</p>}
-      <p className="text-sm text-[var(--muted)] text-center">New here? <Link className="underline decoration-[var(--saffron)] underline-offset-4" href="/auth/signup">Create an account</Link></p>
     </form>
   );
 }

@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useCart } from "@/components/cart-provider";
 import { CheckoutButton } from "@/components/checkout-button";
+import { calculateShippingFee } from "@/lib/utils";
 
 export default function CartPage() {
   const { items, total, removeItem, updateQuantity } = useCart();
+  const shippingFee = calculateShippingFee(total);
+  const grandTotal = total + shippingFee;
 
   return (
     <main className="container-pd py-16 md:py-24">
@@ -55,10 +58,18 @@ export default function CartPage() {
             <p className="label">Order summary</p>
             <div className="mt-6 flex items-center justify-between text-sm">
               <span>Subtotal</span>
-              <strong>${total.toFixed(2)}</strong>
+              <span>${total.toFixed(2)}</span>
+            </div>
+            <div className="mt-3 flex items-center justify-between text-sm">
+              <span>Shipping &amp; handling</span>
+              <span>${shippingFee.toFixed(2)}</span>
+            </div>
+            <div className="mt-4 flex items-center justify-between border-t border-[var(--line)] pt-4 text-base">
+              <strong>Total</strong>
+              <strong>${grandTotal.toFixed(2)}</strong>
             </div>
             <p className="mt-4 text-xs leading-6 text-[var(--muted)]">
-              Shipping and tax can be configured in Stripe before production launch.
+              Final total is charged securely at checkout through Stripe.
             </p>
             <CheckoutButton />
           </aside>

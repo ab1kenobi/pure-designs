@@ -18,7 +18,6 @@ export function Footer() {
             <Link href="/shop" className="block transition-colors hover:text-[var(--saffron)]">Shop</Link>
             <Link href="/bespoke" className="block transition-colors hover:text-[var(--saffron)]">Bespoke</Link>
             <Link href="/about" className="block transition-colors hover:text-[var(--saffron)]">About</Link>
-            <Link href="/account" className="block transition-colors hover:text-[var(--saffron)]">Account</Link>
           </div>
 
           <div className="text-sm text-[var(--paper)]/80">

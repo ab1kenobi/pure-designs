@@ -51,7 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
 
           <p className="mt-4 text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
-            Secure checkout powered by Stripe. Check out as a guest or create an account.
+            Secure checkout powered by Stripe. No account needed.
           </p>
         </div>
       </div>

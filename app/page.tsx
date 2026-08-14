@@ -8,6 +8,7 @@ export default async function HomePage() {
   return (
     <main className="pb-16 md:pb-24">
       <section className="relative overflow-hidden bg-[var(--paper)]">
+        <div className="floral-watermark -right-16 -top-16 rotate-12" />
         <div className="container-pd grid gap-10 py-10 md:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-20">
           <div>
             <span className="pill"><span className="pill-dot" />Hand-dyed in small runs</span>

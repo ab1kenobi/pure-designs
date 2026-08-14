@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingBag, UserRound } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/components/cart-provider";
 
 export function Header() {
@@ -11,6 +11,25 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-[var(--paper)]">
       <div className="container-pd flex h-20 items-center justify-between gap-5">
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3">
+          <svg width="18" height="18" viewBox="0 0 40 40" aria-hidden="true" className="flex-shrink-0">
+            <g fill="var(--berry)">
+              <ellipse cx="28" cy="12" rx="7" ry="3" transform="rotate(0 28 12)" />
+              <ellipse cx="28" cy="12" rx="7" ry="3" transform="rotate(60 28 12)" />
+              <ellipse cx="28" cy="12" rx="7" ry="3" transform="rotate(120 28 12)" />
+              <ellipse cx="28" cy="12" rx="7" ry="3" transform="rotate(180 28 12)" />
+              <ellipse cx="28" cy="12" rx="7" ry="3" transform="rotate(240 28 12)" />
+              <ellipse cx="28" cy="12" rx="7" ry="3" transform="rotate(300 28 12)" />
+            </g>
+            <g fill="var(--saffron)">
+              <ellipse cx="28" cy="12" rx="4" ry="2" transform="rotate(30 28 12)" />
+              <ellipse cx="28" cy="12" rx="4" ry="2" transform="rotate(90 28 12)" />
+              <ellipse cx="28" cy="12" rx="4" ry="2" transform="rotate(150 28 12)" />
+              <ellipse cx="28" cy="12" rx="4" ry="2" transform="rotate(210 28 12)" />
+              <ellipse cx="28" cy="12" rx="4" ry="2" transform="rotate(270 28 12)" />
+              <ellipse cx="28" cy="12" rx="4" ry="2" transform="rotate(330 28 12)" />
+            </g>
+            <circle cx="28" cy="12" r="2.2" fill="var(--ink)" />
+          </svg>
           <span className="display text-xl sm:text-[1.7rem]">Pure Designs</span>
           <span className="hidden text-[9px] uppercase tracking-[0.22em] text-[var(--muted)] sm:inline-block">by Batul</span>
         </Link>
@@ -22,9 +41,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/auth/login" aria-label="Account" className="inline-flex h-10 w-10 items-center justify-center border border-[var(--line)] bg-[var(--panel)] text-[var(--ink)] transition-colors hover:border-[var(--ink)]">
-            <UserRound size={17} strokeWidth={1.5} />
-          </Link>
           <Link href="/cart" aria-label="Cart" className="relative inline-flex h-10 w-10 items-center justify-center border border-[var(--line)] bg-[var(--panel)] text-[var(--ink)] transition-colors hover:border-[var(--ink)]">
             <ShoppingBag size={17} strokeWidth={1.5} />
             {count > 0 && (
