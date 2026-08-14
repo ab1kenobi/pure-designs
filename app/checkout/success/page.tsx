@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { ClearCart } from "@/components/clear-cart";
 
 export default async function SuccessPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
   const { session_id } = await searchParams;
   return (
     <main className="container-pd py-24 text-center">
+      {session_id && <ClearCart />}
       <p className="label">Thank you</p>
       <h1 className="display text-6xl mt-4">Your order is on its way.</h1>
       <div className="thread-rule-thin mx-auto mt-6" />
