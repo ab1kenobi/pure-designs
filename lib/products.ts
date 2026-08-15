@@ -22,7 +22,6 @@ export async function getProducts() {
       .from("products")
       .select("*")
       .eq("is_active", true)
-      .gt("inventory", 0)
       .order("created_at", { ascending: false });
 
     if (error) throw new Error(error.message);
@@ -41,7 +40,6 @@ export async function getFeaturedProducts() {
       .select("*")
       .eq("is_active", true)
       .eq("is_featured", true)
-      .gt("inventory", 0)
       .order("created_at", { ascending: false })
       .limit(4);
 

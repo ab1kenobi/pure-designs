@@ -8,8 +8,17 @@ export default function BespokePage() {
           <p className="label">Bespoke</p>
           <h1 className="display mt-3 text-5xl sm:text-6xl">Create something made just for you.</h1>
           <p className="mt-6 text-base leading-8 text-[var(--muted)] md:text-lg">
-            Tell Batul what you're imagining. Share your colors, occasion, inspiration, and anything else that matters — she'll follow up with a dye plan and a quote.
+            Choose your piece, share your colors, occasion, and inspiration, and pay securely upfront — Batul will follow up with a dye plan and start bringing it to life.
           </p>
+
+          <div className="mt-8 border-t border-[var(--line)] pt-6">
+            <p className="label">Bespoke pricing</p>
+            <ul className="mt-4 space-y-3 text-sm text-[var(--muted)]">
+              <li className="flex justify-between gap-3"><span>Bespoke scarf</span><span className="font-semibold text-[var(--ink)]">$150</span></li>
+              <li className="flex justify-between gap-3"><span>Bespoke purse</span><span className="font-semibold text-[var(--ink)]">$75</span></li>
+              <li className="flex justify-between gap-3"><span>Bespoke scarf + purse set</span><span className="font-semibold text-[var(--ink)]">$175</span></li>
+            </ul>
+          </div>
 
           <div className="mt-8 border-t border-[var(--line)] pt-6">
             <p className="label">Typical project</p>

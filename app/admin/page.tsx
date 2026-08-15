@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminProductForm } from "@/components/admin-product-form";
 import { SignOutButton } from "@/components/signout-button";
 import { MarkShippedButton } from "@/components/order-actions";
+import { BESPOKE_TYPE_LABELS } from "@/lib/email";
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -109,16 +110,49 @@ export default async function AdminPage() {
       <section className="mt-16">
         <h2 className="display text-3xl">Bespoke requests</h2>
         <div className="mt-5 space-y-4">
-          {bespoke?.map((b: any) => (
-            <div key={b.id} className="site-panel p-5">
-              <div className="flex justify-between">
-                <strong>{b.name}</strong><span className="text-sm font-semibold uppercase text-[var(--muted)]">{b.status}</span>
+          {bespoke?.length ? bespoke.map((b: any) => {
+            const address = b.shipping_address;
+            const typeLabel = BESPOKE_TYPE_LABELS[b.type] || b.type;
+            return (
+              <div key={b.id} className="site-panel p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <strong>{b.name}</strong>
+                    <p className="text-sm text-[var(--muted)] mt-1">{b.email} · {b.phone || "No phone"}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold">{typeLabel} · ${Number(b.price || 0).toFixed(2)}</p>
+                    <p className={`text-xs mt-1 font-semibold uppercase tracking-[0.1em] ${b.status === "paid" ? "text-[var(--teal)]" : "text-[var(--saffron)]"}`}>{b.status}</p>
+                  </div>
+                </div>
+
+                <p className="mt-4 text-sm text-[var(--muted)]">Colors: {b.colors || "Not specified"} · Occasion: {b.occasion || "Not specified"}</p>
+                <p className="mt-3">{b.description}</p>
+                {b.inspiration_url && (
+                  <a href={b.inspiration_url} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm underline decoration-[var(--saffron)] underline-offset-4">
+                    Inspiration link
+                  </a>
+                )}
+
+                <div className="mt-4">
+                  <p className="label">Ship to</p>
+                  {address ? (
+                    <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                      {address.name && <>{address.name}<br /></>}
+                      {address.line1}{address.line1 && <br />}
+                      {address.line2 && <>{address.line2}<br /></>}
+                      {[address.city, address.state, address.postal_code].filter(Boolean).join(", ")}
+                      {address.country && <><br />{address.country}</>}
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-sm text-[var(--muted)]">Not yet paid, or no shipping address on file.</p>
+                  )}
+                </div>
+
+                <p className="mt-4 border-t border-[var(--line)] pt-4 text-xs text-[var(--muted)]">{new Date(b.created_at).toLocaleString()}</p>
               </div>
-              <p className="text-sm text-[var(--muted)] mt-2">{b.email} · {b.phone || "No phone"}</p>
-              <p className="mt-4">{b.description}</p>
-              <p className="text-sm text-[var(--muted)] mt-3">Budget: {b.budget || "Not specified"} · Colors: {b.colors || "Not specified"}</p>
-            </div>
-          ))}
+            );
+          }) : <p className="mt-5 text-[var(--muted)]">No bespoke requests yet.</p>}
         </div>
       </section>
     </main>

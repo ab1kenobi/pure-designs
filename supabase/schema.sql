@@ -16,6 +16,14 @@ create table if not exists public.products (
   created_at timestamptz not null default now()
 );
 
+-- Regular products are fixed-price by category: Scarves $100, Purses $50.
+update public.products set category = 'Scarves' where category not in ('Scarves', 'Purses');
+update public.products set price = 100 where category = 'Scarves' and price is distinct from 100;
+update public.products set price = 50 where category = 'Purses' and price is distinct from 50;
+
+alter table public.products drop constraint if exists products_category_check;
+alter table public.products add constraint products_category_check check (category in ('Scarves', 'Purses'));
+
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
   stripe_session_id text not null unique,
@@ -49,9 +57,22 @@ create table if not exists public.bespoke_requests (
   occasion text,
   description text not null,
   inspiration_url text,
-  status text not null default 'new',
+  status text not null default 'pending_payment',
+  type text not null default 'scarf',
+  price numeric(10,2),
+  stripe_session_id text unique,
+  shipping_address jsonb,
   created_at timestamptz not null default now()
 );
+
+alter table public.bespoke_requests add column if not exists type text not null default 'scarf';
+alter table public.bespoke_requests add column if not exists price numeric(10,2);
+alter table public.bespoke_requests add column if not exists stripe_session_id text unique;
+alter table public.bespoke_requests add column if not exists shipping_address jsonb;
+alter table public.bespoke_requests alter column status set default 'pending_payment';
+
+alter table public.bespoke_requests drop constraint if exists bespoke_requests_type_check;
+alter table public.bespoke_requests add constraint bespoke_requests_type_check check (type in ('scarf', 'purse', 'set'));
 
 alter table public.products enable row level security;
 alter table public.orders enable row level security;

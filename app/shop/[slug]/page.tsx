@@ -41,7 +41,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               </div>
               <div>
                 <dt className="font-semibold text-[var(--ink)]">Availability</dt>
-                <dd>{product.inventory > 0 ? `${product.inventory} available` : "Sold out"}</dd>
+                <dd className={product.inventory > 0 ? "text-[var(--teal)] font-semibold" : "text-[var(--muted)] font-semibold"}>
+                  {product.inventory > 0 ? "Available" : "Sold out"}
+                </dd>
               </div>
             </dl>
           </div>

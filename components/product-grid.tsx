@@ -13,25 +13,31 @@ export function ProductGrid({ products }: { products: Product[] }) {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-      {products.map((product) => (
-        <Link href={`/shop/${product.slug}`} key={product.id} className="group block">
-          <div className="scarf-card">
-            <img
-              src={product.images?.[0] || "/placeholder.svg"}
-              alt={product.name}
-              className="card-image transition-transform duration-500 group-hover:scale-[1.03]"
-            />
-          </div>
-
-          <div className="mt-4 flex items-start justify-between gap-4">
-            <div>
-              <p className="label">{product.category}</p>
-              <h3 className="display mt-1.5 text-2xl leading-none text-[var(--ink)]">{product.name}</h3>
+      {products.map((product) => {
+        const inStock = product.inventory > 0;
+        return (
+          <Link href={`/shop/${product.slug}`} key={product.id} className="group block">
+            <div className="scarf-card">
+              <img
+                src={product.images?.[0] || "/placeholder.svg"}
+                alt={product.name}
+                className={`card-image transition-transform duration-500 group-hover:scale-[1.03] ${inStock ? "" : "opacity-50"}`}
+              />
             </div>
-            <p className="pt-1 text-sm font-semibold">${Number(product.price).toFixed(0)}</p>
-          </div>
-        </Link>
-      ))}
+
+            <div className="mt-4 flex items-start justify-between gap-4">
+              <div>
+                <p className="label">{product.category}</p>
+                <h3 className="display mt-1.5 text-2xl leading-none text-[var(--ink)]">{product.name}</h3>
+                <p className={`mt-1 text-xs font-semibold uppercase tracking-[0.1em] ${inStock ? "text-[var(--teal)]" : "text-[var(--muted)]"}`}>
+                  {inStock ? "Available" : "Sold out"}
+                </p>
+              </div>
+              <p className="pt-1 text-sm font-semibold">${Number(product.price).toFixed(0)}</p>
+            </div>
+          </Link>
+        );
+      })}
     </div>
   );
 }
