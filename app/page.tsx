@@ -1,10 +1,13 @@
 import Link from "next/link";
-import { ProductGrid } from "@/components/product-grid";
-import { getFeaturedProducts } from "@/lib/products";
 
-export default async function HomePage() {
-  const products = await getFeaturedProducts();
+const SHOWCASE_IMAGES = [
+  "/images/showcase/scarf-1.jpg",
+  "/images/showcase/scarf-2.jpg",
+  "/images/showcase/scarf-3.jpg",
+  "/images/showcase/scarf-4.jpg",
+];
 
+export default function HomePage() {
   return (
     <main className="pb-16 md:pb-24">
       <section className="relative overflow-hidden bg-[var(--paper)]">
@@ -43,13 +46,13 @@ export default async function HomePage() {
 
           <div className="relative">
             <div className="absolute -inset-4 -z-10 hidden rotate-2 bg-[var(--ink)] md:block" />
-            <div className="scarf-card">
+            <Link href="/shop" className="scarf-card block">
               <img
-                src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85"
-                alt="Model wearing a silk scarf"
-                className="h-[420px] w-full object-cover md:h-[600px]"
+                src={SHOWCASE_IMAGES[0]}
+                alt="Hand-dyed silk scarf from the studio"
+                className="h-[420px] w-full object-cover transition-transform duration-500 hover:scale-[1.03] md:h-[600px]"
               />
-            </div>
+            </Link>
           </div>
         </div>
         <div className="fringe fringe-light" />
@@ -66,24 +69,38 @@ export default async function HomePage() {
       <section className="container-pd py-20 md:py-28">
         <div className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="label">Selected pieces</p>
-            <h2 className="display mt-3 text-4xl sm:text-5xl">The collection</h2>
+            <p className="label">From the studio</p>
+            <h2 className="display mt-3 text-4xl sm:text-5xl">A showcase, not a catalog</h2>
+            <p className="mt-4 max-w-xl text-base leading-8 text-[var(--muted)]">
+              Every scarf is hand-dyed and finished one at a time, so no two are exactly alike. The pieces
+              below show the range of what leaves the studio — shop the collection to bring one home.
+            </p>
           </div>
-          <Link href="/shop" className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--ink)] transition-colors hover:text-[var(--teal)]">View all</Link>
+          <Link href="/shop" className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--ink)] transition-colors hover:text-[var(--teal)]">Shop scarves</Link>
         </div>
 
-        <ProductGrid products={products} />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {SHOWCASE_IMAGES.map((src, i) => (
+            <Link href="/shop" key={src} className="scarf-card block">
+              <img
+                src={src}
+                alt={`Hand-dyed silk scarf from the studio, example ${i + 1}`}
+                className="aspect-square w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+              />
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="panel-dark">
         <div className="container-pd grid gap-10 py-20 md:grid-cols-[0.9fr_1.1fr] md:items-center md:py-24">
-          <div className="scarf-card">
+          <Link href="/shop" className="scarf-card block">
             <img
-              src="https://images.unsplash.com/photo-1601924928374-cc4f3c2c8a5a?auto=format&fit=crop&w=1000&q=85"
-              alt="Textile detail"
-              className="h-[420px] w-full object-cover md:h-[540px]"
+              src={SHOWCASE_IMAGES[1]}
+              alt="Textile detail from a hand-dyed silk scarf"
+              className="h-[420px] w-full object-cover transition-transform duration-500 hover:scale-[1.03] md:h-[540px]"
             />
-          </div>
+          </Link>
 
           <div>
             <p className="label text-[var(--paper)]/50">Creative direction</p>

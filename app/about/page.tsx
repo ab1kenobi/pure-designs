@@ -10,8 +10,8 @@ export default function AboutPage() {
       <div className="mt-12 grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
         <div className="scarf-card">
           <img
-            src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1000&q=85"
-            alt="Artist working with textiles"
+            src="/images/about/batul.jpg"
+            alt="Batul, the artist behind Pure Designs by Batul"
             className="aspect-[4/5] w-full object-cover"
           />
         </div>

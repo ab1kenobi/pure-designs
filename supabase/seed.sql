@@ -9,7 +9,7 @@ values
   'Silk',
   'Approx. 36 × 36 in',
   'Scarves',
-  array['https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85'],
+  array['/images/showcase/scarf-1.jpg'],
   3,
   true,
   true
@@ -22,7 +22,7 @@ values
   'Silk',
   'Approx. 36 × 36 in',
   'Scarves',
-  array['https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=1200&q=85'],
+  array['/images/showcase/scarf-4.jpg'],
   2,
   true,
   true
@@ -35,7 +35,7 @@ values
   'Silk blend',
   'Approx. 36 × 36 in',
   'Scarves',
-  array['https://images.unsplash.com/photo-1583846783214-7229a91b20ed?auto=format&fit=crop&w=1200&q=85'],
+  array['/images/showcase/scarf-2.jpg'],
   4,
   true,
   false
@@ -48,7 +48,7 @@ values
   'Silk',
   'Approx. 36 × 36 in',
   'Scarves',
-  array['https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1200&q=85'],
+  array['/images/showcase/scarf-3.jpg'],
   2,
   true,
   false

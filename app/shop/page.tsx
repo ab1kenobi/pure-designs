@@ -1,8 +1,11 @@
 import { ProductGrid } from "@/components/product-grid";
+import { BuyAScarf } from "@/components/buy-a-scarf";
 import { getProducts } from "@/lib/products";
 
 export default async function ShopPage() {
   const products = await getProducts();
+  const scarves = products.filter((p) => p.category === "Scarves");
+  const otherProducts = products.filter((p) => p.category !== "Scarves");
 
   return (
     <main className="container-pd py-14 md:py-20">
@@ -21,7 +24,16 @@ export default async function ShopPage() {
         <div className="site-panel px-4 py-3">Bespoke commissions</div>
       </div>
 
-      <ProductGrid products={products} />
+      <BuyAScarf products={scarves} />
+
+      {otherProducts.length > 0 && (
+        <div className="mt-20">
+          <p className="label">More from the studio</p>
+          <h2 className="display mt-3 text-4xl sm:text-5xl">Purses</h2>
+          <div className="thread-rule-thin mt-5 mb-10" />
+          <ProductGrid products={otherProducts} />
+        </div>
+      )}
     </main>
   );
 }

@@ -39,6 +39,13 @@ export async function POST(request: Request) {
       const unitAmount = Math.round(Number(product.price) * 100);
       subtotalCents += unitAmount * item.quantity;
 
+      const image = product.images?.[0];
+      const absoluteImage = image
+        ? image.startsWith("http")
+          ? image
+          : `${process.env.NEXT_PUBLIC_SITE_URL}${image}`
+        : undefined;
+
       lineItems.push({
         quantity: item.quantity,
         price_data: {
@@ -46,7 +53,7 @@ export async function POST(request: Request) {
           unit_amount: unitAmount,
           product_data: {
             name: product.name,
-            images: product.images?.[0] ? [product.images[0]] : undefined
+            images: absoluteImage ? [absoluteImage] : undefined
           }
         }
       });
