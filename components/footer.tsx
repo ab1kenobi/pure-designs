@@ -22,7 +22,7 @@ export function Footer() {
 
           <div className="text-sm text-[var(--paper)]/80">
             <p className="label text-[var(--paper)]/50">Contact</p>
-            <p className="mt-4">batuld@hotmail.com</p>
+            <p className="mt-4">batuld@hotmail.com </p>
             <p className="mt-2">Instagram / @puredesignsbybatul</p>
           </div>
         </div>
