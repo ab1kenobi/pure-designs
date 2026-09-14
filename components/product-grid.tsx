@@ -25,15 +25,11 @@ export function ProductGrid({ products }: { products: Product[] }) {
               />
             </div>
 
-            <div className="mt-4 flex items-start justify-between gap-4">
-              <div>
-                <p className="label">{product.category}</p>
-                <h3 className="display mt-1.5 text-2xl leading-none text-[var(--ink)]">{product.name}</h3>
-                <p className={`mt-1 text-xs font-semibold uppercase tracking-[0.1em] ${inStock ? "text-[var(--teal)]" : "text-[var(--muted)]"}`}>
-                  {inStock ? "Available" : "Sold out"}
-                </p>
-              </div>
-              <p className="pt-1 text-sm font-semibold">${Number(product.price).toFixed(0)}</p>
+            <div className="mt-4">
+              <p className="label">{product.category}</p>
+              <p className={`mt-1.5 text-xs font-semibold uppercase tracking-[0.1em] ${inStock ? "text-[var(--teal)]" : "text-[var(--muted)]"}`}>
+                {inStock ? "Available" : "Sold out"}
+              </p>
             </div>
           </Link>
         );

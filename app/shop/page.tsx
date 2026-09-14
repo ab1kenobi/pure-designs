@@ -1,11 +1,8 @@
 import { ProductGrid } from "@/components/product-grid";
-import { BuyAScarf } from "@/components/buy-a-scarf";
 import { getProducts } from "@/lib/products";
 
 export default async function ShopPage() {
   const products = await getProducts();
-  const scarves = products.filter((p) => p.category === "Scarves");
-  const otherProducts = products.filter((p) => p.category !== "Scarves");
 
   return (
     <main className="container-pd py-14 md:py-20">
@@ -14,6 +11,7 @@ export default async function ShopPage() {
         <h1 className="display mt-3 text-5xl sm:text-6xl">The collection</h1>
         <p className="mt-5 text-base leading-8 text-[var(--muted)] md:text-lg">
           Hand-dyed silk scarves in small, considered dye lots — cut, hemmed, and pressed one at a time.
+          Every piece is one of a kind and individually priced, so no two designs cost quite the same.
         </p>
         <div className="thread-rule-thin mt-6" />
       </div>
@@ -24,16 +22,7 @@ export default async function ShopPage() {
         <div className="site-panel px-4 py-3">Bespoke commissions</div>
       </div>
 
-      <BuyAScarf products={scarves} />
-
-      {otherProducts.length > 0 && (
-        <div className="mt-20">
-          <p className="label">More from the studio</p>
-          <h2 className="display mt-3 text-4xl sm:text-5xl">Purses</h2>
-          <div className="thread-rule-thin mt-5 mb-10" />
-          <ProductGrid products={otherProducts} />
-        </div>
-      )}
+      <ProductGrid products={products} />
     </main>
   );
 }

@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminProductForm } from "@/components/admin-product-form";
 import { SignOutButton } from "@/components/signout-button";
 import { MarkShippedButton } from "@/components/order-actions";
+import { EditProductPrice } from "@/components/edit-product-price";
 import { BESPOKE_TYPE_LABELS } from "@/lib/email";
 
 export default async function AdminPage() {
@@ -45,7 +46,8 @@ export default async function AdminPage() {
           {products?.map((p: any) => (
             <div key={p.id} className="site-panel p-5">
               <div className="flex justify-between gap-3">
-                <strong>{p.name}</strong><span>${Number(p.price).toFixed(2)}</span>
+                <strong>{p.name}</strong>
+                <EditProductPrice productId={p.id} price={Number(p.price)} />
               </div>
               <p className="text-sm text-[var(--muted)] mt-2">{p.inventory} in stock</p>
               <p className={`text-xs mt-3 font-semibold uppercase tracking-[0.1em] ${p.is_active ? "text-[var(--teal)]" : "text-[var(--muted)]"}`}>{p.is_active ? "Active" : "Hidden"}</p>

@@ -60,56 +60,6 @@ export async function POST(request: Request) {
           console.error("Bespoke notification email failed", err);
         }
       }
-
-      return NextResponse.json({ received: true });
-    }
-
-    const items = JSON.parse(session.metadata?.product_items || "[]") as { id: string; quantity: number }[];
-
-    const { data: existing } = await supabase
-      .from("orders")
-      .select("id")
-      .eq("stripe_session_id", session.id)
-      .maybeSingle();
-
-    if (!existing) {
-      const { data: order, error } = await supabase.from("orders").insert({
-        stripe_session_id: session.id,
-        customer_email: session.customer_details?.email || null,
-        customer_phone: session.customer_details?.phone || null,
-        total: (session.amount_total || 0) / 100,
-        status: "paid",
-        shipping_address: session.shipping_details?.address
-          ? { name: session.shipping_details.name || null, ...session.shipping_details.address }
-          : null
-      }).select("id").single();
-
-      if (error || !order) {
-        console.error("Order creation failed", error);
-        return new NextResponse("Order creation failed", { status: 500 });
-      }
-
-      const { data: products } = await supabase
-        .from("products")
-        .select("id, price")
-        .in("id", items.map((i) => i.id));
-
-      for (const item of items) {
-        const product = products?.find((p) => p.id === item.id);
-        if (!product) continue;
-
-        await supabase.from("order_items").insert({
-          order_id: order.id,
-          product_id: item.id,
-          quantity: item.quantity,
-          unit_price: product.price
-        });
-
-        await supabase.rpc("decrement_inventory", {
-          p_product_id: item.id,
-          p_quantity: item.quantity
-        });
-      }
     }
   }
 

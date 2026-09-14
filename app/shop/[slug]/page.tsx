@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/products";
-import { AddToCart } from "@/components/add-to-cart";
+import { RequestPiece } from "@/components/request-piece";
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -25,7 +25,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="md:sticky md:top-24 self-start">
           <p className="label">{product.category}</p>
           <h1 className="display mt-3 text-5xl md:text-6xl">{product.name}</h1>
-          <p className="mt-5 text-2xl font-semibold">${product.price.toFixed(2)}</p>
           <div className="thread-rule-thin mt-5" />
 
           <div className="mt-7 border-y border-[var(--line)] py-7 text-[var(--muted)] leading-7">
@@ -48,12 +47,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </dl>
           </div>
 
-          <div className="site-panel mt-8 p-5">
-            <AddToCart product={product} />
-          </div>
+          <RequestPiece product={product} />
 
           <p className="mt-4 text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
-            Secure checkout powered by Stripe. No account needed.
+            Each piece is one of a kind — Batul will confirm payment and shipping by email.
           </p>
         </div>
       </div>

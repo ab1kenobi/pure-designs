@@ -4,7 +4,6 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { CartProvider } from "@/components/cart-provider";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -35,11 +34,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body>
-        <CartProvider>
-          <Header />
-          {children}
-          <Footer />
-        </CartProvider>
+        <Header />
+        {children}
+        <Footer />
         <Analytics />
       </body>
     </html>

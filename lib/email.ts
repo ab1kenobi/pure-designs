@@ -1,5 +1,41 @@
 import { Resend } from "resend";
 
+type PieceRequestNotification = {
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string | null;
+  productName: string;
+  productPrice: number;
+};
+
+export async function sendPieceRequestNotification(request: PieceRequestNotification) {
+  const to = process.env.MOM_NOTIFICATION_EMAIL;
+  if (!to || !process.env.RESEND_API_KEY) {
+    console.warn("Skipping piece request notification email: RESEND_API_KEY or MOM_NOTIFICATION_EMAIL not set.");
+    return;
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL || "Pure Designs by Batul <onboarding@resend.dev>",
+    to,
+    replyTo: request.email,
+    subject: `New piece request — ${request.productName} ($${request.productPrice})`,
+    text: [
+      `${request.name} requested a piece from the shop.`,
+      "",
+      `Piece: ${request.productName} ($${request.productPrice})`,
+      `Email: ${request.email}`,
+      `Phone: ${request.phone || "Not provided"}`,
+      "",
+      "Message:",
+      request.message || "None"
+    ].join("\n")
+  });
+}
+
 export const BESPOKE_TYPE_LABELS: Record<string, string> = {
   scarf: "Bespoke scarf",
   purse: "Bespoke purse",

@@ -1,12 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
-import { useCart } from "@/components/cart-provider";
 
 export function Header() {
-  const { count } = useCart();
-
   return (
     <header className="sticky top-0 z-50 bg-[var(--paper)]">
       <div className="container-pd flex h-20 items-center justify-between gap-5">
@@ -39,17 +33,6 @@ export function Header() {
           <Link href="/bespoke" className="transition-colors hover:text-[var(--teal)]">Bespoke</Link>
           <Link href="/about" className="transition-colors hover:text-[var(--teal)]">About</Link>
         </nav>
-
-        <div className="flex items-center gap-3">
-          <Link href="/cart" aria-label="Cart" className="relative inline-flex h-10 w-10 items-center justify-center border border-[var(--line)] bg-[var(--panel)] text-[var(--ink)] transition-colors hover:border-[var(--ink)]">
-            <ShoppingBag size={17} strokeWidth={1.5} />
-            {count > 0 && (
-              <span className="absolute -right-1.5 -top-1.5 flex h-4.5 w-4.5 min-w-4.5 items-center justify-center rounded-full bg-[var(--berry)] px-1 text-[9px] font-bold text-[var(--paper)]">
-                {count}
-              </span>
-            )}
-          </Link>
-        </div>
       </div>
 
       <div className="thread-rule" />

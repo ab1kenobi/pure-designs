@@ -16,10 +16,8 @@ create table if not exists public.products (
   created_at timestamptz not null default now()
 );
 
--- Regular products are fixed-price by category: Scarves $100, Purses $50.
+-- Each scarf/purse is individually priced (no fixed price per category).
 update public.products set category = 'Scarves' where category not in ('Scarves', 'Purses');
-update public.products set price = 100 where category = 'Scarves' and price is distinct from 100;
-update public.products set price = 50 where category = 'Purses' and price is distinct from 50;
 
 alter table public.products drop constraint if exists products_category_check;
 alter table public.products add constraint products_category_check check (category in ('Scarves', 'Purses'));

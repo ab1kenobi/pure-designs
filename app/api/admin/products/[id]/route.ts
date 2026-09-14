@@ -4,19 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 const schema = z.object({
-  name: z.string().min(2),
-  slug: z.string().min(2),
-  description: z.string().min(10),
-  price: z.number().positive(),
-  material: z.string().optional(),
-  dimensions: z.string().optional(),
-  category: z.enum(["Scarves", "Purses"]),
-  inventory: z.number().int().min(0),
-  images: z.array(z.string().url()).min(1),
-  is_featured: z.boolean()
+  price: z.number().positive()
 });
 
-export async function POST(request: Request) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const auth = await createClient();
   const { data: { user } } = await auth.auth.getUser();
   if (!user || user.email !== process.env.ADMIN_EMAIL) {
@@ -24,12 +15,13 @@ export async function POST(request: Request) {
   }
 
   try {
+    const { id } = await params;
     const data = schema.parse(await request.json());
     const supabase = createAdminClient();
-    const { error } = await supabase.from("products").insert({ ...data, is_active: true });
+    const { error } = await supabase.from("products").update({ price: data.price }).eq("id", id);
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     return NextResponse.json({ ok: true });
   } catch {
-    return NextResponse.json({ error: "Invalid product data." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid price." }, { status: 400 });
   }
 }
