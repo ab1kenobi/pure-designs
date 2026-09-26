@@ -1,4 +1,20 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
+
+let transport: ReturnType<typeof nodemailer.createTransport> | null = null;
+
+function getTransport() {
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) return null;
+  if (!transport) {
+    transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD
+      }
+    });
+  }
+  return transport;
+}
 
 type PieceRequestNotification = {
   name: string;
@@ -6,27 +22,28 @@ type PieceRequestNotification = {
   phone: string | null;
   message: string | null;
   productName: string;
-  productPrice: number;
+  productPrice: number | null;
 };
 
 export async function sendPieceRequestNotification(request: PieceRequestNotification) {
   const to = process.env.MOM_NOTIFICATION_EMAIL;
-  if (!to || !process.env.RESEND_API_KEY) {
-    console.warn("Skipping piece request notification email: RESEND_API_KEY or MOM_NOTIFICATION_EMAIL not set.");
+  const mailer = getTransport();
+  if (!to || !mailer) {
+    console.warn("Skipping piece request notification email: GMAIL_USER/GMAIL_APP_PASSWORD or MOM_NOTIFICATION_EMAIL not set.");
     return;
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const priceLabel = request.productPrice !== null ? `$${request.productPrice}` : "price not yet set";
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || "Pure Designs by Batul <onboarding@resend.dev>",
+  await mailer.sendMail({
+    from: `Pure Designs by Batul <${process.env.GMAIL_USER}>`,
     to,
     replyTo: request.email,
-    subject: `New piece request — ${request.productName} ($${request.productPrice})`,
+    subject: `New piece request — ${request.productName} (${priceLabel})`,
     text: [
       `${request.name} requested a piece from the shop.`,
       "",
-      `Piece: ${request.productName} ($${request.productPrice})`,
+      `Piece: ${request.productName} (${priceLabel})`,
       `Email: ${request.email}`,
       `Phone: ${request.phone || "Not provided"}`,
       "",
@@ -56,16 +73,16 @@ type BespokeNotification = {
 
 export async function sendBespokeNotification(request: BespokeNotification) {
   const to = process.env.MOM_NOTIFICATION_EMAIL;
-  if (!to || !process.env.RESEND_API_KEY) {
-    console.warn("Skipping bespoke notification email: RESEND_API_KEY or MOM_NOTIFICATION_EMAIL not set.");
+  const mailer = getTransport();
+  if (!to || !mailer) {
+    console.warn("Skipping bespoke notification email: GMAIL_USER/GMAIL_APP_PASSWORD or MOM_NOTIFICATION_EMAIL not set.");
     return;
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
   const typeLabel = BESPOKE_TYPE_LABELS[request.type] || request.type;
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || "Pure Designs by Batul <onboarding@resend.dev>",
+  await mailer.sendMail({
+    from: `Pure Designs by Batul <${process.env.GMAIL_USER}>`,
     to,
     replyTo: request.email,
     subject: `New paid bespoke order — ${typeLabel} ($${request.price})`,

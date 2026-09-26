@@ -16,9 +16,9 @@
     "clsx": "latest",
     "lucide-react": "latest",
     "next": "latest",
+    "nodemailer": "^10.0.10",
     "react": "latest",
     "react-dom": "latest",
-    "resend": "^6.20.0",
     "stripe": "latest",
     "tailwind-merge": "latest",
     "tailwindcss": "^4.3.3",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "eslint": "latest",

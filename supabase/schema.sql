@@ -17,6 +17,9 @@ create table if not exists public.products (
 );
 
 -- Each scarf/purse is individually priced (no fixed price per category).
+-- Price can be left unset (null) until a piece is priced.
+alter table public.products alter column price drop not null;
+
 update public.products set category = 'Scarves' where category not in ('Scarves', 'Purses');
 
 alter table public.products drop constraint if exists products_category_check;

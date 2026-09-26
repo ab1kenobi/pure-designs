@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       phone: data.phone || null,
       message: data.message || null,
       productName: product.name,
-      productPrice: Number(product.price)
+      productPrice: product.price !== null ? Number(product.price) : null
     });
 
     return NextResponse.json({ ok: true });

@@ -5,7 +5,7 @@ export type Product = {
   name: string;
   slug: string;
   description: string;
-  price: number;
+  price: number | null;
   material: string | null;
   dimensions: string | null;
   category: string;

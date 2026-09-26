@@ -14,7 +14,7 @@ export function AdminProductForm() {
       name,
       slug: slugify(name),
       description: String(form.get("description") || ""),
-      price: Number(form.get("price")),
+      price: String(form.get("price") || "").trim() ? Number(form.get("price")) : null,
       material: String(form.get("material") || ""),
       dimensions: String(form.get("dimensions") || ""),
       category: String(form.get("category") || "Scarves"),
@@ -41,7 +41,7 @@ export function AdminProductForm() {
         <option value="Scarves">Scarves</option>
         <option value="Purses">Purses</option>
       </select>
-      <input required name="price" type="number" min="0.01" step="0.01" placeholder="Price" className="input" />
+      <input name="price" type="number" min="0.01" step="0.01" placeholder="Price (optional)" className="input" />
       <input name="material" placeholder="Material" className="input" />
       <input name="dimensions" placeholder="Dimensions" className="input" />
       <input required name="inventory" type="number" min="0" defaultValue={1} placeholder="Inventory" className="input" />

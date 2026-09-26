@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function EditProductPrice({ productId, price }: { productId: string; price: number }) {
+export function EditProductPrice({ productId, price }: { productId: string; price: number | null }) {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState(String(price));
+  const [value, setValue] = useState(price !== null ? String(price) : "");
   const [saving, setSaving] = useState(false);
 
   async function save() {
@@ -26,7 +26,7 @@ export function EditProductPrice({ productId, price }: { productId: string; pric
   if (!editing) {
     return (
       <button onClick={() => setEditing(true)} className="text-sm font-semibold hover:text-[var(--teal)]">
-        ${price.toFixed(2)}
+        {price !== null ? `$${price.toFixed(2)}` : "Set price"}
       </button>
     );
   }

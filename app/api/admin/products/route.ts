@@ -7,7 +7,7 @@ const schema = z.object({
   name: z.string().min(2),
   slug: z.string().min(2),
   description: z.string().min(10),
-  price: z.number().positive(),
+  price: z.number().positive().nullable(),
   material: z.string().optional(),
   dimensions: z.string().optional(),
   category: z.enum(["Scarves", "Purses"]),
