@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/products";
 import { RequestPiece } from "@/components/request-piece";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
